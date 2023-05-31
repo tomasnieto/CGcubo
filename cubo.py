@@ -51,7 +51,7 @@ def main():
     flag = True
 
     pygame.init()
-    width, height = 800, 600
+    width, height = 1366, 768 #800, 600
     pygame.display.set_mode((width, height), DOUBLEBUF | OPENGL)
     gluPerspective(45, (width / height), 0.1, 50.0)
     glTranslatef(0.0, 0.0, -5)
@@ -64,15 +64,18 @@ def main():
 
     while True:
         for event in pygame.event.get():
-            keys = pygame.key.get_pressed()
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
             x, y = pygame.mouse.get_pos()
-            x = 1.2*(x-400)/200
-            y = 1.2*(-y + 300)/150
+            x = 1.2*(x-(width/2))/(width/4)
+            y = 1.2*(-y + (height/2))/(height/4)
 
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    quit()
+
                 if event.key == pygame.K_s:
                     if flag:
                         texture1 = load_texture("textures/real.png")
@@ -113,36 +116,6 @@ def main():
                         vertices3[2] = np.array([x, y])
                     case pygame.K_b:
                         vertices3[1] = np.array([x, y])
-                """if event.key == pygame.K_1:
-                    vertices1[3] = np.array([x, y])
-                if event.key == pygame.K_2:
-                    vertices1[0] = np.array([x,y])
-                if event.key == pygame.K_3:
-                    vertices1[2] = np.array([x,y])
-                if event.key == pygame.K_4:
-                    vertices1[1] = np.array([x,y])
-
-                if event.key == pygame.K_5:
-                    vertices2[3] = np.array([x,y])
-                if event.key == pygame.K_7:
-                    vertices2[2] = np.array([x,y])
-                if event.key == pygame.K_8:
-                    vertices2[1] = np.array([x,y])
-                if event.key == pygame.K_6:
-                    vertices2[0] = np.array([x,y])
-
-                if event.key == pygame.K_9:
-                    vertices3[3] = np.array([x,y])
-                if event.key == pygame.K_a:
-                    vertices3[2] = np.array([x,y])
-                if event.key == pygame.K_b:
-                    vertices3[1] = np.array([x,y])
-                if event.key == pygame.K_0:
-                    vertices3[0] = np.array([x,y])
-"""
-            #print(x, y)
-
-            #print(pygame.mouse.get_pos())
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         draw(vertices1, edges1, tex_coords, texture1)
